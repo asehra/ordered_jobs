@@ -14,7 +14,7 @@ class JobSequenceContentsMatcher
   end
 
   def failure_message
-    "Sequence is missing some elements: #{ @missing.map(&:name) }"
+    "Sequence is missing some elements: #{ @missing.map(&:name) }; in sequence: #{ @expected_list.map(&:name) }"
   end
 end
 
