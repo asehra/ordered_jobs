@@ -29,4 +29,8 @@ describe "ordered jobs" do
     JobSequencer.sequence("a => \nb => c\nc => f\nd => a\ne => b\nf =>").should place("a").before("d")
     JobSequencer.sequence("a => \nb => c\nc => f\nd => a\ne => b\nf =>").should place("b").before("e")
   end
+
+  it "should raise error when a job depends on itself" do
+    lambda{ JobSequencer.sequence("a => \nb => \nc => c") }.should raise_error(SelfDependenceError)
+  end
 end

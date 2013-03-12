@@ -1,3 +1,5 @@
+class SelfDependenceError < StandardError; end
+
 class JobSequencer
   def self.sequence(specs)
     sequence = JobSequencer.new
@@ -31,7 +33,7 @@ class JobSequencer
   end
 
   def add_dependency(name, dependency)
-
+    raise SelfDependenceError.new if name == dependency
     if has_job?(dependency)
       @job_list.insert(index(dependency)+1, Job.new(name))
     else
