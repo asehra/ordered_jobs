@@ -35,8 +35,12 @@ class JobSequencer
     if has_job?(dependency)
       @job_list.insert(index(dependency)+1, Job.new(name))
     else
-      add_job dependency
-      add_job name
+      if has_job? name
+        @job_list.insert(index(name), Job.new(dependency))
+      else
+        add_job dependency
+        add_job name
+      end
     end
   end
 
