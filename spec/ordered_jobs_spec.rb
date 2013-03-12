@@ -31,6 +31,10 @@ describe "ordered jobs" do
   end
 
   it "should raise error when a job depends on itself" do
-    lambda{ JobSequencer.sequence("a => \nb => \nc => c") }.should raise_error(SelfDependenceError)
+    lambda{ JobSequencer.sequence("a => \nb => \nc => c") }.should raise_error(SelfDependencyError)
+  end
+
+  it "should raise error when jobs have circular dependencies" do
+    lambda{ JobSequencer.sequence("a => \nb => c\nc => f\nd => a\ne => \nf => b") }.should raise_error(CircularDependencyError)
   end
 end
